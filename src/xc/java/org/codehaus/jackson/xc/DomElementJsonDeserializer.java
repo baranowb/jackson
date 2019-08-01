@@ -30,6 +30,9 @@ public class DomElementJsonDeserializer
         try {
             DocumentBuilderFactory bf = DocumentBuilderFactory.newInstance();
             bf.setNamespaceAware(true);
+            /* CVE-2016-3720 */ 
+            bf.setExpandEntityReferences(false);
+            bf.setFeature(javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING, true);
             builder = bf.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
             throw new RuntimeException();

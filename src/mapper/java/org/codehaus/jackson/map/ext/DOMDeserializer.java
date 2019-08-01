@@ -22,6 +22,19 @@ public abstract class DOMDeserializer<T> extends FromStringDeserializer<T>
         _parserFactory = DocumentBuilderFactory.newInstance();
         // yup, only cave men do XML without recognizing namespaces...
         _parserFactory.setNamespaceAware(true);
+
+        /* CVE-2016-3720 */
+        // [databind#1279]: make sure external entities NOT expanded by default
+        _parserFactory.setExpandEntityReferences(false);
+        // ... and in general, aim for "safety"
+        try {
+            _parserFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        } catch(ParserConfigurationException pce) {
+            // not much point to do anything; could log but...
+        } catch (Error e) {
+            // 14-Jul-2016, tatu: Not sure how or why, but during code coverage runs
+            //   (via Cobertura) we get `java.lang.AbstractMethodError` so... ignore that too
+        }
     }
 
     protected DOMDeserializer(Class<T> cls) { super(cls); }
