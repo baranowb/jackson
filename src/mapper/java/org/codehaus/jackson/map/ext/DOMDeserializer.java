@@ -1,7 +1,6 @@
 package org.codehaus.jackson.map.ext;
 
 import java.io.StringReader;
-
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.codehaus.jackson.map.DeserializationContext;
@@ -28,8 +27,8 @@ public abstract class DOMDeserializer<T> extends FromStringDeserializer<T>
         _parserFactory.setExpandEntityReferences(false);
         // ... and in general, aim for "safety"
         try {
-            _parserFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-        } catch(ParserConfigurationException pce) {
+            _parserFactory.setFeature("http://javax.xml.XMLConstants/feature/secure-processing", true);
+        } catch(Exception pce) {
             // not much point to do anything; could log but...
         } catch (Error e) {
             // 14-Jul-2016, tatu: Not sure how or why, but during code coverage runs

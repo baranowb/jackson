@@ -14,7 +14,7 @@ import org.codehaus.jackson.map.deser.ValueInstantiator;
  * 
  * @since 1.7
  */
-public class SimpleModule extends Module
+public class SimpleModule extends org.codehaus.jackson.map.Module
 {
     protected final String _name;
     protected final Version _version;
